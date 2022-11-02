@@ -1,12 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Todo } from "../types/Todo";
-export interface TodoListState {
-  todos: Todo[];
-}
-interface TodoStatusState {
-  status: "REMAINING" | "COMPLETED";
-  id: string;
-}
+import { Todo, TodoListState, TodoStatusState } from "../models/Todo";
+
 const initialState: TodoListState = {
   todos: [],
 };
@@ -25,7 +19,7 @@ export const TodoListSlice = createSlice({
         return item.id === payload.id ? { ...payload } : item;
       });
     },
-    loadTodos: (state) => {},
+    loadTodos: () => {},
     loadTodoSucess: (state, { payload }: PayloadAction<TodoListState>) => {
       state.todos = payload.todos;
     },

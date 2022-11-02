@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Todo } from "../types/Todo";
+import { Todo } from "../models/Todo";
 const httpClient = axios.create({
   baseURL: "https://react-todo-app-json-server.herokuapp.com",
 });

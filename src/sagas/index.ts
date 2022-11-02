@@ -1,6 +1,6 @@
-import { all, call, put, select, takeLatest } from "redux-saga/effects";
-import { api } from "../apis";
-import { RootState } from "../reducers/store";
+import { all, call, put, select, takeLatest } from 'redux-saga/effects';
+import { api } from '../apis';
+import { RootState } from '../reducers/store';
 import {
   loadTodos,
   loadTodoSucess,
@@ -8,7 +8,7 @@ import {
   saveTodos,
   saveTodosSucess,
   saveTodosFail,
-} from "../reducers/todoListReducer";
+} from '../reducers/todoListReducer';
 export const getTodos = (state: RootState) => state.todoList.todos;
 export function* loadToDosSaga(): any {
   try {
