@@ -20,8 +20,12 @@ export const TodoListSlice = createSlice({
     deleteTask: (state, { payload }: PayloadAction<{ id: string }>) => {
       state.todos = state.todos.filter((item) => item.id !== payload.id);
     },
-    editTask: (state, action: PayloadAction<number>) => {},
-    loadTodos: (state) => initialState,
+    editTask: (state, { payload }: PayloadAction<Todo>) => {
+      state.todos = state.todos.map((item) => {
+        return item.id === payload.id ? { ...payload } : item;
+      });
+    },
+    loadTodos: (state) => {},
     loadTodoSucess: (state, { payload }: PayloadAction<TodoListState>) => {
       state.todos = payload.todos;
     },
@@ -46,5 +50,6 @@ export const {
   updateTaskStatus,
   addNewTask,
   deleteTask,
+  editTask,
 } = TodoListSlice.actions;
 export default TodoListSlice.reducer;

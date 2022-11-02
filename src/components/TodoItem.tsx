@@ -9,12 +9,14 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import dayjs from "dayjs";
-import EditTodoListInput from "./EditTodoListInput";
+import { TaskInputDialog } from "./TodoListInput";
+import { useModal } from "../app/useModal";
 interface TodoItemProps {
   todoData: Todo;
 }
 const label = { inputProps: { "aria-label": "Checkbox" } };
 const TodoItem: FC<TodoItemProps> = ({ todoData }) => {
+  const { isOpen, onClose, onOpen } = useModal();
   const dispatch = useAppDispatch();
   const isCompleted = useMemo(() => {
     return todoData.status === "COMPLETED";
@@ -27,7 +29,7 @@ const TodoItem: FC<TodoItemProps> = ({ todoData }) => {
       return true;
     }
     return false;
-  }, [isCompleted]);
+  }, [isCompleted, todoData.date]);
   const onChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       dispatch(
@@ -39,17 +41,21 @@ const TodoItem: FC<TodoItemProps> = ({ todoData }) => {
     },
     [todoData.id, dispatch]
   );
-  const handleClick = useCallback((event: React.MouseEvent<HTMLElement>) => {
-    switch (event.detail) {
-      case 2: {
-        console.log("double click");
-        break;
+  const handleClick = useCallback(
+    (event: React.MouseEvent<HTMLElement>) => {
+      switch (event.detail) {
+        case 2: {
+          onOpen();
+          break;
+        }
+        default: {
+          break;
+        }
       }
-      default: {
-        break;
-      }
-    }
-  }, []);
+    },
+    [onOpen]
+  );
+
   const onDeleteTask = useCallback(() => {
     dispatch(
       deleteTask({
@@ -137,7 +143,16 @@ const TodoItem: FC<TodoItemProps> = ({ todoData }) => {
           </Stack>
         </Stack>
       </Button>
-      <EditTodoListInput />
+      {isOpen && (
+        <TaskInputDialog
+          date={todoData.date}
+          taskName={todoData?.taskName}
+          description={todoData?.description}
+          id={todoData.id}
+          mode="edit"
+          handleClose={onClose}
+        />
+      )}
     </>
   );
 };

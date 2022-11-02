@@ -5,11 +5,9 @@ import React, { FC, useCallback, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import { Dialog } from "@mui/material";
 import { SaveAs, AddCircleOutline } from "@mui/icons-material";
-import { Box } from "@mui/system";
 import { useModal } from "../app/useModal";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { useDispatch } from "react-redux";
-import { addNewTask, saveTodos } from "../reducers/todoListReducer";
+import { addNewTask, editTask, saveTodos } from "../reducers/todoListReducer";
 import * as uuid from "uuid";
 const ToDoListInput = () => {
   const dispatch = useDispatch();
@@ -60,18 +58,39 @@ const ToDoListInput = () => {
           }}
         />
       </Fab>
-      {isOpen && <TaskInputDialog handleClose={onClose} />}
+      {isOpen && <TaskInputDialog mode="create" handleClose={onClose} />}
     </>
   );
 };
-interface TaskInputDialogProps {
+
+type TaskInputDialogDefaultProps =
+  | TaskInputDialogEditProps
+  | TaskInputDialogCreateProps;
+interface TaskInputDialogCreateProps {
   handleClose: () => void;
+  mode: "create";
 }
-const TaskInputDialog: FC<TaskInputDialogProps> = ({ handleClose }) => {
+interface TaskInputDialogEditProps {
+  handleClose: () => void;
+  id: string;
+  mode: "edit";
+  taskName: string;
+  description: string;
+  date: string;
+}
+
+export const TaskInputDialog: FC<TaskInputDialogDefaultProps> = (props) => {
+  const { handleClose, mode } = props;
   const dispatch = useDispatch();
-  const [value, setValue] = React.useState<Dayjs | null>(dayjs());
-  const [taskName, setTaskName] = useState("");
-  const [description, setDescription] = useState("");
+  const [value, setValue] = React.useState<Dayjs | null>(
+    mode === "edit" ? dayjs(props.date, "DD-MM-YYYY") : dayjs()
+  );
+  const [taskName, setTaskName] = useState(
+    mode === "edit" ? props?.taskName : ""
+  );
+  const [description, setDescription] = useState(
+    mode === "edit" ? props?.description : ""
+  );
   const handleChange = useCallback(
     (newValue: Dayjs | null) => {
       setValue(newValue);
@@ -102,6 +121,21 @@ const TaskInputDialog: FC<TaskInputDialogProps> = ({ handleClose }) => {
     );
     handleClose();
   }, [taskName, description, value, handleClose, dispatch]);
+  const onEditTask = useCallback(() => {
+    if (mode === "edit") {
+      dispatch(
+        editTask({
+          id: props.id,
+          taskName: taskName,
+          description: description,
+          date: value?.format("DD/MM/YYYY")!,
+          status: "REMAINING",
+        })
+      );
+    }
+    handleClose();
+    //@ts-ignore
+  }, [taskName, description, value, handleClose, dispatch, mode, props?.id]);
   return (
     <Dialog fullWidth onClose={handleClose} open={true}>
       <Stack padding={4}>
@@ -120,6 +154,7 @@ const TaskInputDialog: FC<TaskInputDialogProps> = ({ handleClose }) => {
           onChange={onDescriptionInputChange}
           multiline
           fullWidth
+          value={description}
           placeholder="Description"
         />
         <DatePicker
@@ -141,13 +176,23 @@ const TaskInputDialog: FC<TaskInputDialogProps> = ({ handleClose }) => {
           >
             Cancel
           </Button>
-          <Button
-            disabled={!taskName}
-            onClick={onAddNewTask}
-            variant="contained"
-          >
-            Add Task
-          </Button>
+          {mode === "create" ? (
+            <Button
+              disabled={!taskName}
+              onClick={onAddNewTask}
+              variant="contained"
+            >
+              Add Task
+            </Button>
+          ) : (
+            <Button
+              disabled={!taskName}
+              onClick={onEditTask}
+              variant="contained"
+            >
+              Update Task
+            </Button>
+          )}
         </Stack>
       </Stack>
     </Dialog>
