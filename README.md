@@ -1,6 +1,19 @@
+# Demo
+
+- Deploy to Vercel [https://react-todo-list-five-theta.vercel.app](https://react-todo-list-five-theta.vercel.app)
+- json-server [https://react-todo-app-json-server.herokuapp.com](https://react-todo-app-json-server.herokuapp.com)
+
+# Screenshot
+
+<p float="left">
+  <img src="https://react-todo-list-five-theta.vercel.app/screenshot/screenshot-main.png" width="100" />
+  <img src="https://react-todo-list-five-theta.vercel.app/screenshot/screenshot-completed.png" width="100" />
+ <img src="https://react-todo-list-five-theta.vercel.app/screenshot/screenshot-create.png" width="100" />
+</p>
+
 # Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) TS template.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/).
 
 ## Available Scripts
 
