@@ -9,6 +9,7 @@ export interface Todo {
 
 export interface TodoListState {
   todos: Todo[];
+  loading: boolean;
 }
 export interface TodoStatusState {
   status: Status;

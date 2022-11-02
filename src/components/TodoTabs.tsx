@@ -6,15 +6,13 @@ import {
   TextField,
   useMediaQuery,
 } from '@mui/material';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { loadTodos } from '../reducers/todoListReducer';
+import React, { useCallback, useMemo, useState } from 'react';
+import { useAppSelector } from '../app/hooks';
 import dayjs from 'dayjs';
 import { a11yProps, TabPanel } from './TodoPanel';
 
 const TodoTabs = () => {
   const matches = useMediaQuery('(min-width:600px)');
-  const dispatch = useAppDispatch();
   const [searchText, setSearchText] = useState('');
   const allTodos = useAppSelector((state) => {
     return state.todoList.todos;
@@ -68,9 +66,6 @@ const TodoTabs = () => {
     [setSearchText],
   );
 
-  useEffect(() => {
-    dispatch(loadTodos());
-  }, [dispatch]);
   return (
     <Paper
       elevation={3}

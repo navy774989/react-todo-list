@@ -13,7 +13,7 @@ export const getTodos = (state: RootState) => state.todoList.todos;
 export function* loadToDosSaga(): any {
   try {
     const { data } = yield call(api.getToDos);
-    yield put(loadTodoSucess({ todos: data.data }));
+    yield put(loadTodoSucess({ todos: data.data, loading: false }));
   } catch {
     yield put(loadTodoFail());
   }

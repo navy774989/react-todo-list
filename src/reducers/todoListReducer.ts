@@ -1,11 +1,12 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Todo, TodoListState, TodoStatusState } from "../models/Todo";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Todo, TodoListState, TodoStatusState } from '../models/Todo';
 
 const initialState: TodoListState = {
   todos: [],
+  loading: true,
 };
 export const TodoListSlice = createSlice({
-  name: "todoListReducer",
+  name: 'todoListReducer',
   initialState,
   reducers: {
     addNewTask: (state, { payload }: PayloadAction<Todo>) => {
@@ -22,16 +23,25 @@ export const TodoListSlice = createSlice({
     loadTodos: () => {},
     loadTodoSucess: (state, { payload }: PayloadAction<TodoListState>) => {
       state.todos = payload.todos;
+      state.loading = payload.loading;
+    },
+    loadTodoFail: (state) => {
+      state.loading = false;
     },
     updateTaskStatus: (state, { payload }: PayloadAction<TodoStatusState>) => {
       state.todos = state.todos.map((item) =>
-        item.id === payload.id ? { ...item, status: payload.status } : item
+        item.id === payload.id ? { ...item, status: payload.status } : item,
       );
     },
-    saveTodos: () => {},
-    saveTodosSucess: () => {},
-    saveTodosFail: () => {},
-    loadTodoFail: () => {},
+    saveTodos: (state) => {
+      state.loading = true;
+    },
+    saveTodosSucess: (state) => {
+      state.loading = false;
+    },
+    saveTodosFail: (state) => {
+      state.loading = false;
+    },
   },
 });
 export const {
