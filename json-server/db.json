@@ -1,0 +1,48 @@
+{
+  "todoList": {
+    "data": [
+      {
+        "id": "1",
+        "taskName": "Complete main UI components",
+        "description": "Would be good if we include every componet in design system... ",
+        "date": "28/10/2022",
+        "status": "REMAINING"
+      },
+      {
+        "id": "3",
+        "taskName": "Brand Guidelines",
+        "description": "Need more info....",
+        "date": "01/11/2022",
+        "status": "REMAINING"
+      },
+      {
+        "id": "2",
+        "taskName": "Landing page design",
+        "description": "",
+        "date": "31/10/2022",
+        "status": "REMAINING"
+      },
+      {
+        "id": "9dc2a21f-a263-459c-9f64-299f7eb1336e",
+        "taskName": "asdfdsf",
+        "description": "",
+        "date": "02/11/2022",
+        "status": "REMAINING"
+      },
+      {
+        "id": "b5b6035e-08b0-4904-9547-ad36322b4a40",
+        "taskName": "asdfdsf",
+        "description": "asdfsd",
+        "date": "02/11/2022",
+        "status": "REMAINING"
+      },
+      {
+        "id": "0ce9c619-a06d-4f88-b18a-a87f539f9972",
+        "taskName": "sdfasdf",
+        "description": "asdfdsf",
+        "date": "16/11/2022",
+        "status": "REMAINING"
+      }
+    ]
+  }
+}
